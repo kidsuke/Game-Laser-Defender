@@ -34,7 +34,6 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	void OnTriggerEnter2D(Collider2D col) {
-		Debug.Log("player hit");
 		Projectile projectile = col.gameObject.GetComponent<Projectile>();
 		if (projectile) {
 			getHit(projectile);

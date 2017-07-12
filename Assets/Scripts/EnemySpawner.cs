@@ -17,7 +17,7 @@ public class EnemySpawner : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		spawnEnemiesUntilFull();
+		spawnEnemies();
 		createHorizontalGamespace();
 	}
 	
@@ -100,8 +100,6 @@ public class EnemySpawner : MonoBehaviour {
 		if (freePosition) {
 			GameObject enemy = Instantiate(enemyPrefab, freePosition.position, Quaternion.identity) as GameObject;
 			enemy.transform.parent = freePosition;
-		}
-		if (nextFreePosition()) {
 			Invoke("spawnEnemiesUntilFull", spawnDelay);
 		}
 	}
