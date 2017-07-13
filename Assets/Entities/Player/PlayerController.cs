@@ -12,6 +12,9 @@ public class PlayerController : MonoBehaviour {
 	public float projectileSpeed = 5f;
 	public float firingRate = 0.2f;
 
+	public AudioClip fireSound;
+	public AudioClip destroySound;
+
 	// Use this for initialization
 	void Start () {
 		float distance = transform.position.z - Camera.main.transform.position.z;
@@ -56,13 +59,21 @@ public class PlayerController : MonoBehaviour {
 		health -= projectile.getDamage();
 		projectile.hit();
 		if (health <= 0) {
-			Destroy(gameObject);
+			die();
 		}
 	}
 
 	void fire() {
 		Vector3 offset = new Vector3(0, 1, 0);
 		GameObject playerProjectile = Instantiate(projectile, this.transform.position + offset, Quaternion.identity) as GameObject;
+		AudioSource.PlayClipAtPoint(fireSound, offset);
 		playerProjectile.rigidbody2D.velocity = new Vector2(0f, projectileSpeed);
+	}
+
+	void die() {
+		LevelManager manager = GameObject.FindObjectOfType<LevelManager> ();
+		manager.LoadLevel("Win Screen");
+		AudioSource.PlayClipAtPoint(destroySound, gameObject.transform.position);
+		Destroy(gameObject);
 	}
 }
